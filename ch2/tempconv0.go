@@ -21,8 +21,14 @@ func FToC(f Fahrenheit) Celsius {
 	return Celsius((f - 32) * 5 / 9)
 }
 
+func (c Celsius) String() string {
+	return fmt.Sprintf("%g°C", c)
+}
+
 func main() {
 	f := CToF(37.0)
 	fmt.Println(f)
-	fmt.Println(FToC(f))
+	c := FToC(f)
+	fmt.Println(c)
+	fmt.Printf("%g\n", c)
 }
