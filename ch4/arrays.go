@@ -4,6 +4,16 @@ import (
 	"fmt"
 )
 
+func argCopy(array [4]int) {
+	array = [4]int{2, 2, 2, 2}
+	fmt.Println(array)
+}
+
+func argRef(array *[4]int) {
+	*array = [4]int{2, 2, 2, 2}
+	fmt.Println(*array)
+}
+
 func main() {
 	//t := [5]int{1, 2, 3, 4.2, 5}
 	//fmt.Println(t)
@@ -41,4 +51,11 @@ func main() {
 	fmt.Println(a1 == a2, a1 == a3)
 	//a4 := [3]int{1, 2}
 	//fmt.Println(a1 == a4)
+
+	aa := [4]int{1, 1, 1, 1}
+	argCopy(aa)
+	fmt.Println(aa)
+
+	argRef(&aa)
+	fmt.Println(aa)
 }
