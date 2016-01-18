@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
@@ -39,14 +38,12 @@ func CreateIndexFile() error {
 		items[strconv.Itoa(i)] = item
 	}
 
-	b, err := json.Marshal(items)
+	file, err := os.Create(IndexFile)
 	if err != nil {
-		fmt.Println(err)
 		return err
 	}
-	err = ioutil.WriteFile(IndexFile, b, os.ModePerm)
-	fmt.Println(err)
-	return err
+	defer file.Close()
+	return json.NewEncoder(file).Encode(&items)
 }
 
 func LoadIndex() (map[string]Xkcd, error) {
