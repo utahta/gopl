@@ -82,8 +82,9 @@
 
 ## 4.6 Text and HTML Templates
 
-
-
-
+* `text/template`
+* `html/template`
+  * よしなにエスケープしてくれる
+  * `template.HTML` エスケープしてほしくないものに
 
 

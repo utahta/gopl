@@ -3,10 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
 	"time"
 )
@@ -52,22 +52,40 @@ func SearchIssues(terms []string) (*IssuesSearchResult, error) {
 	return &result, nil
 }
 
-func main() {
-	result, err := SearchIssues(os.Args[1:])
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%d issues:\n", result.TotalCount)
+var issueList = template.Must(template.New("issueList").Parse(`
+<h1>{{ .TotalCount }}</h1>
+<table>
+<tr style='text-align: left'>
+	<th>#</th>
+	<th>State</th>
+	<th>User</th>
+	<th>Title</th>
+</tr>
+{{ range .Items }}
+<tr>
+	<td><a href='{{ .HTMLURL }}'>{{ .Number }}</a></td>
+	<td>{{ .State }}</td>
+	<td><a href='{{ .User.HTMLURL }}'>{{ .User.Login }}</a></td>
+	<td><a href='{{ .HTMLURL }}'>{{ .Title }}</a></td>
+</tr>
+{{ end }}
+</table>
+`))
 
-	now := time.Now()
-	for _, item := range result.Items {
-		days := now.Sub(item.CreatedAt).Hours() / 24
-		category := "more than a year old"
-		if days < 30 {
-			category = "less than a month"
-		} else if days < 365 {
-			category = "less than a year old"
-		}
-		fmt.Printf("#%-5d %9.9s %.55s %s\n", item.Number, item.User.Login, item.Title, category)
+func Handler(w http.ResponseWriter, r *http.Request) {
+	params := []string{"repo:golang/go", "3133", "10535"}
+	result, err := SearchIssues(params)
+	if err != nil {
+		fmt.Fprintf(w, "%v", err)
+		return
 	}
+
+	if err := issueList.Execute(w, result); err != nil {
+		fmt.Fprintf(w, "%v", err)
+	}
+}
+
+func main() {
+	http.HandleFunc("/", Handler)
+	log.Fatal(http.ListenAndServe("localhost:8000", nil))
 }
