@@ -35,6 +35,12 @@ gopl.ioサンプルコード
     - https://github.com/adonovan/gopl.io/blob/master/ch7/eval/check.go
     - https://github.com/adonovan/gopl.io/blob/master/ch7/surface/surface.go
         
+# 7.10 Type Assertions
+
+C++ の dynamic cast みたいな感じがある
+
+https://github.com/utahta/gopl/blob/master/ch7/type_assertions.go
+        
 # ズンドコ
 
 https://gist.github.com/utahta/69f91fbb3d6d18ea392a
