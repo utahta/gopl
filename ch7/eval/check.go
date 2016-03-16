@@ -36,6 +36,16 @@ func (b binary) Check(vars map[Var]bool) error {
 	return b.y.Check(vars)
 }
 
+func (c comparison) Check(vars map[Var]bool) error {
+	if !strings.ContainsRune("?", c.op) {
+		return fmt.Errorf("unexpected binary op %q", c.op)
+	}
+	if err := c.x.Check(vars); err != nil {
+		return err
+	}
+	return c.y.Check(vars)
+}
+
 func (c call) Check(vars map[Var]bool) error {
 	arity, ok := numParams[c.fn]
 	if !ok {

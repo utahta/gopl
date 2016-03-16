@@ -19,7 +19,7 @@ type error Interface {
 - 単項演算子 `+x` `-x`
 - 関数呼び出し `pow(x, y)` `sin(x)` `sqrt(x)` 
 - 変数
-- 値は全部 float64 型
+- 値は float64 型
 
 gopl.ioサンプルコード
 
@@ -34,3 +34,7 @@ gopl.ioサンプルコード
 - Check
     - https://github.com/adonovan/gopl.io/blob/master/ch7/eval/check.go
     - https://github.com/adonovan/gopl.io/blob/master/ch7/surface/surface.go
+        
+# ズンドコ
+
+https://gist.github.com/utahta/69f91fbb3d6d18ea392a

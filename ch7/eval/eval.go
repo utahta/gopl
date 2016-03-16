@@ -67,4 +67,17 @@ func (c call) Eval(env Env) float64 {
 	panic(fmt.Sprintf("unsupported function call: %s", c.fn))
 }
 
+func (c comparison) Eval(env Env) float64 {
+	switch c.op {
+	case '?':
+		x := c.x.Eval(env)
+		y := c.y.Eval(env)
+		if x < y {
+			return x
+		}
+		return y
+	}
+	panic(fmt.Sprintf("unsupported binary operator: %q", c.op))
+}
+
 //!-Eval2

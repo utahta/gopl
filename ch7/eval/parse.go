@@ -38,6 +38,8 @@ func (lex *lexer) describe() string {
 
 func precedence(op rune) int {
 	switch op {
+	case '?':
+		return 2
 	case '*', '/':
 		return 2
 	case '+', '-':
@@ -90,8 +92,12 @@ func parseBinary(lex *lexer, prec1 int) Expr {
 		for precedence(lex.token) == prec {
 			op := lex.token
 			lex.next() // consume operator
-			rhs := parseBinary(lex, prec+1)
-			lhs = binary{op, lhs, rhs}
+			rhs := parseBinary(lex, prec + 1)
+			if op == '?' {
+				lhs = comparison{op, lhs, rhs}
+			} else {
+				lhs = binary{op, lhs, rhs}
+			}
 		}
 	}
 	return lhs

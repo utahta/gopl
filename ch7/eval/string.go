@@ -21,6 +21,10 @@ func (b binary) String() string {
 	return fmt.Sprintf("[%s %s %s]", b.x.String(), string(b.op), b.y.String())
 }
 
+func (c comparison) String() string {
+	return fmt.Sprintf("[%s %s %s]", c.x.String(), string(c.op), c.y.String())
+}
+
 func (c call) String() string {
 	o := ""
 	o += fmt.Sprintf("%s(", c.fn)

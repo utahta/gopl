@@ -32,6 +32,11 @@ type binary struct {
 	x, y Expr
 }
 
+type comparison struct {
+	op   rune // one of '?'
+	x, y Expr
+}
+
 // A call represents a function call expression, e.g., sin(x).
 type call struct {
 	fn   string // one of "pow", "sin", "sqrt"
